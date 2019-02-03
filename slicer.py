@@ -30,6 +30,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 progname = os.path.basename(sys.argv[0])
 progversion = "0.1"
@@ -37,12 +38,12 @@ progversion = "0.1"
 class MyMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
     def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
+        self.fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = self.fig.add_subplot(111)
 
         self.compute_initial_figure()
 
-        FigureCanvas.__init__(self, fig)
+        FigureCanvas.__init__(self, self.fig)
         self.setParent(parent)
 
         FigureCanvas.setSizePolicy(self,
@@ -98,17 +99,25 @@ class ArrayMplCanvas(MyMplCanvas):
             if sliced_arr.shape[n]>1:
                 axis_no.append(n)  
 
-        if len(axis_no)==2:
+        if len(axis_no)<3:
+            if hasattr(self,'cax'):
+                # Remove a colorbar if it exists
+                self.fig.delaxes(self.cax)
             self.axes.cla()
-            self.axes.imshow(trial_arr, interpolation=None, aspect="auto")
-            self.axes.set_ylabel("Axis {}".format(axis_no[0]))
-            self.axes.set_xlabel("Axis {}".format(axis_no[1]))
-            self.draw()
-            
-        elif len(axis_no)==1:
-            self.axes.cla()
-            self.axes.imshow(trial_arr[np.newaxis,:], interpolation=None, aspect="auto")
-            self.axes.set_xlabel("Axis {} (0-based)".format(axis_no[0]))
+
+            if len(axis_no)==2:
+                self.im=self.axes.imshow(trial_arr, interpolation=None, aspect="auto")
+                self.axes.set_ylabel("Axis {}".format(axis_no[0]))
+                self.axes.set_xlabel("Axis {}".format(axis_no[1]))
+                
+            elif len(axis_no)==1:
+                self.im=self.axes.imshow(trial_arr[np.newaxis,:], interpolation=None, aspect="auto")
+                self.axes.set_xlabel("Axis {} (0-based)".format(axis_no[0]))
+                
+            self.divider = make_axes_locatable(self.axes)
+            self.cax = self.divider.append_axes('right', size='2%', pad=0.08)
+            self.fig.colorbar(self.im, cax=self.cax, orientation='vertical')
+
             self.draw()
 
 class ApplicationWindow(QtWidgets.QMainWindow):
