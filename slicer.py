@@ -228,12 +228,12 @@ This program is a simple program to display a 1D or 2D slice of a multidimension
 It may be used and modified with no restriction; raw copies as well as
 modified versions may be distributed without limitation.""")
 
-qApp = QtWidgets.QApplication(sys.argv)
+def slicer(array):
+    qApp = QtWidgets.QApplication(sys.argv)
+    aw = ApplicationWindow(array)
+    aw.setWindowTitle("%s" % progname)
+    aw.show()
+    qApp.exec_()
 
-array=np.random.random((256,128,64))
-
-aw = ApplicationWindow(array)
-aw.setWindowTitle("%s" % progname)
-aw.show()
-sys.exit(qApp.exec_())
-#qApp.exec_()
+if __name__=="__main__":
+    array=np.random.random((256,128,64))
