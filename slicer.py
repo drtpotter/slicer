@@ -9,6 +9,9 @@
 # by Toby M Potter of Pelagos Consulting and Education, 2019
 # https://www.pelagos-consulting.com
 
+# Complete courses in Python available at
+# https://learn.pelagos-consulting.com
+
 from __future__ import unicode_literals
 import sys
 import os
