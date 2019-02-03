@@ -1,7 +1,7 @@
 # Slicer
 Visualise 1D or 2D slices of an N-dimensional Numpy array.
 
-[slicer](screenshot.png)
+![slicer](screenshot.png)
 
 I have always wanted a straightforward, simple, and fast way of plotting 1D, and 2D slices of a multidimensional array. No frills, no software issues, just raw visualisation goodness. Since discovering Pyside2 I have finally been able to realise this dream....
 
