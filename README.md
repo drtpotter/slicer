@@ -24,5 +24,9 @@ conda install pyside2
 
 In the last few lines of the script I create a Numpy array of random values and send it to the application. Where you get your numpy array from is up to you.
 
+# Nice to haves
+
+* It would be very nice if we could have a way to control the color scaling in the image by way of a histogram, like PyQTGraph's [HistogramLUTWidget](http://www.pyqtgraph.org/documentation/widgets/histogramlutwidget.html) without going back to pyside and Qt4.
+
 Have fun, and by all means send me a pull request if you found a way to make it better!
 
