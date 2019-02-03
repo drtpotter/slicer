@@ -13,6 +13,11 @@ You need to install
 
 This is easy to do with Anaconda Python.
 
+```bash
+conda config --add channels conda-forge
+conda install pyside2
+```
+
 # Running
 
 In the last few lines of the script I create a Numpy array of random values and send it to the application. Where you get your numpy array from is up to you.
