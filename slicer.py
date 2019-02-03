@@ -237,3 +237,4 @@ def slicer(array):
 
 if __name__=="__main__":
     array=np.random.random((256,128,64))
+    slicer(array)
